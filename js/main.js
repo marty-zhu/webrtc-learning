@@ -35,7 +35,7 @@ let createOffer = async () => {
         })
     };
 
-    peerConnection.onicecandidate = (e) => {
+    peerConnection.onicecandidate = async (e) => {
         if (e.candidate) {
             console.log('new ICE candidate:', e.candidate);
         };
