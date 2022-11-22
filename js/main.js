@@ -2,6 +2,16 @@ let localStream;
 let remoteStream;
 let peerConnection;
 
+const servers = {
+    iceServers: [{
+        urls: ['stun.l.google.com:19302',
+            'stun1.l.google.com:19302',
+            'stun2.l.google.com:19302',
+            'stun3.l.google.com:19302',
+            'stun4.l.google.com:19302']
+    }]
+}
+
 let init = async () => {
     localStream = await navigator.mediaDevices.getUserMedia({video: true, audio: false});
     document.getElementById('user-1').srcObject = localStream;
@@ -10,7 +20,7 @@ let init = async () => {
 };
 
 let createOffer = async () => {
-    peerConnection = new RTCPeerConnection();
+    peerConnection = new RTCPeerConnection(servers);
 
     remoteStream = new MediaStream();
     document.getElementById('user-2').srcObject = remoteStream;
