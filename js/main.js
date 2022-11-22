@@ -25,6 +25,16 @@ let createOffer = async () => {
     remoteStream = new MediaStream();
     document.getElementById('user-2').srcObject = remoteStream;
 
+    localStream.getTracks().forEach((track) => {
+        peerConnection.addTrack(track, localStream);
+    });
+
+    peerConnection.ontrack = (e) => {
+        e.streams[0].getTracks().forEach((track) => {
+            remoteStream.addTrack(track);
+        })
+    }
+
     let offer = await peerConnection.createOffer();
     await peerConnection.setLocalDescription(offer);
 
