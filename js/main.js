@@ -33,7 +33,13 @@ let createOffer = async () => {
         e.streams[0].getTracks().forEach((track) => {
             remoteStream.addTrack(track);
         })
-    }
+    };
+
+    peerConnection.onicecandidate = (e) => {
+        if (e.candidate) {
+            console.log('new ICE candidate:', e.candidate);
+        };
+    };
 
     let offer = await peerConnection.createOffer();
     await peerConnection.setLocalDescription(offer);
